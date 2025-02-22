@@ -8,46 +8,39 @@ function Header() {
         <header className="header">
           <div className="nav-links">
             <a 
-              href="/" 
+              
               className={`nav-link ${currentPath === '/' ? 'active' : ''}`}
             >
               <div className="flex items-center gap-2">
                 <Home size={18} />
-                <span>Home</span>
+                <Link to="/">Home</Link>
               </div>
             </a>
     
-            <a 
            
-              className={`nav-link ${currentPath === '/change-password' ? 'active' : ''}`}
-            >
-              <div className="flex items-center gap-2">
-                <Lock size={18} />
-                
-                <Link to='/changepassword'>Change Password</Link>
-              </div>
-            </a>
     
-            <a 
+            <p 
             
               className={`nav-link ${currentPath === '/edit' ? 'active' : ''}`}
             >
               <div className="flex items-center gap-2">
                 <UserCog size={18} />
                 <span></span>
-                <Link to='/edit'>Edit Profile</Link>
+                <Link to='/edit'>Upload Image</Link>
               </div>
-            </a>
+            </p>
           </div>
           <a 
          
               className={`nav-link ${currentPath === '/login' ? 'active' : ''}`}
             >
+              <a  href='/login'>
               <div className="flex items-center gap-2">
                 <LogOutIcon size={18} />
                 <span></span>
-                <Link to='/login'>Logout</Link>
+                Logout
               </div>
+              </a>
             </a>
         </header>
       );

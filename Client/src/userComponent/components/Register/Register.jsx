@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import './Register.css';
-
+import axios from 'axios'
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router";
 const Register = () => {
+    let navigate=useNavigate()
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
         confirmPassword: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        Address:''
     });
 
     const [errors, setErrors] = useState({});
@@ -31,7 +34,16 @@ const Register = () => {
     const validateForm = () => {
         const newErrors = {};
         
+if (!formData.firstName.trim()){
+    newErrors.firstName ="please enter valid details"
+}
+if(!formData.lastName.trim()){
+newErrors.lastName ="please enter valid details"
+}
         // Email validation
+
+
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
             newErrors.email = 'Please enter a valid email address';
@@ -60,10 +72,17 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateForm()) {
-            // Handle registration logic here
-        //   axios.post('http://localhost:3000/',{
-
-        //   })
+            axios.post('http://localhost:3000/register', {
+                formData
+              })
+              .then(function (response) {
+                console.log(response,"response")
+              navigate('/login')
+              })
+              .catch(function (error) {
+                console.log(error.response.data.message);
+                setErrors({email:error.response.data.message})
+              });
         }
     };
 
@@ -84,6 +103,7 @@ const Register = () => {
                                 onChange={handleChange}
                                 required
                             />
+                            {errors.firstName && <span className="error-message">{errors.firstName}</span>}
                         </div>
 
                         <div className="form-group">
@@ -95,9 +115,19 @@ const Register = () => {
                                 onChange={handleChange}
                                 required
                             />
+                             {errors.lastName && <span className="error-message">{errors.lastName}</span>}
                         </div>
                     </div>
-
+                    <div className="form-group">
+                            <label>Address</label>
+                            <input
+                                type="text"
+                                name="Address"
+                                value={formData.Address}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
                     <div className="form-group">
                         <label>Email</label>
                         <input
@@ -146,7 +176,7 @@ const Register = () => {
                         />
                         {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
                     </div>
-
+                    <span className="error-message">{errors.email}</span>
                     <button type="submit" className="register-button">
                         Create Account
                     </button>

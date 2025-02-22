@@ -19,11 +19,12 @@
   
   .profile-image-container {
     flex-shrink: 0;
+    
   }
   
-  .profile-image {
-    width: 150px;
-    height: 150px;
+  .profile-images {
+     width: 150px;
+    height: 150px; 
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid #fff;

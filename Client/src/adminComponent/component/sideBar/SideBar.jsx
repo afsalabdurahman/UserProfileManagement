@@ -24,10 +24,12 @@ function SideBar() {
                             <Settings size={20} />
                             <span>Settings</span>
                         </li>
+                        <a href="/">
                         <li className="logout">
                             <LogOut size={20} />
-                            <span>Logout</span>
+                          <p>Logout</p>
                         </li>
+                        </a>
                     </ul>
                 </nav>
             </aside>

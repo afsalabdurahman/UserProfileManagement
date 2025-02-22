@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Otp.css';
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router";
+import axios from 'axios';
 
 const Otp = () => {
+    let navigate=useNavigate()
     // State to store the OTP digits
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [message, setMessage] = useState('');
@@ -71,7 +74,17 @@ const Otp = () => {
         const otpValue = otp.join('');
         if (otpValue.length === 6) {
             setMessage('Verifying OTP...');
-            // Add your OTP verification logic here
+            axios.post('http://localhost:3000/checkotp',{otpValue}).then((res)=>{
+                if(res.data.url){
+                    alert("ok")
+                    navigate(res.data.url)
+                }else{
+                    setMessage(res.data.error)
+                }
+            })
+           
+            
+            
             console.log('OTP Submitted:', otpValue);
         } else {
             setMessage('Please enter all digits');

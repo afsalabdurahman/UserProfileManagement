@@ -1,5 +1,8 @@
 import React from 'react'
 import './Home.css'
+import { useSelector } from 'react-redux';
+
+
 import { 
     User, 
     Mail, 
@@ -10,48 +13,59 @@ import {
     Twitter, 
     Globe 
   } from 'lucide-react';
+  import { useState,useEffect } from 'react';
+  import { useContext } from 'react';
+import { UrlContext } from '../../../ContextApi/Url';
+
 function Home() {
-    const profileData = {
-        name: "John Doe",
-        email: "john.doe@example.com",
-        phone: "+1 (555) 123-4567",
-        address: "123 Tech Street, Silicon Valley, CA 94025",
-        image: "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png",
-        social: {
-          github: "https://github.com/johndoe",
-          linkedin: "https://linkedin.com/in/johndoe",
-          twitter: "https://twitter.com/johndoe",
-          website: "https://johndoe.com"
-        }
-      };
+  let [user,setUser]=useState()
+  let {data}=useContext(UrlContext)
+  console.log(data,"................data home")
+
+  const users = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (users && Object.keys(users).length > 0) {
+      // Access the first user or whichever user you want from the state
+      const firstUser = users[Object.keys(users)[0]]; // Get the first user from the object
+      setUser(firstUser);
+      console.log(user,"userssssss")
+    }
+  }, [users]);
+
+
+      if (!user) {
+        return <div>Loading...</div>; // Show loading if there's no user yet
+      }
     return (
+     
         <div className="profile-container">
           <div className="profile-header">
             <div className="profile-image-container">
               <img 
-                src={profileData.image} 
-                alt={profileData.name} 
-                className="profile-image"
+                src={data?data:"https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png"} 
+                alt={name} 
+                className="profile-images"
               />
             </div>
             
             <div className="profile-info">
-              <h1 className="profile-name">{profileData.name}</h1>
+              <h1 className="profile-name">{user.user1.FirstName}</h1>
               
               <div className="profile-details">
                 <div className="detail-item">
                   <Mail className="detail-icon" />
-                  <span>{profileData.email}</span>
+                  <span>{user.user1.email}</span>
                 </div>
                 
                 <div className="detail-item">
                   <Phone className="detail-icon" />
-                  <span>{profileData.phone}</span>
+                  <span>{user.user1.mobile}</span>
                 </div>
                 
                 <div className="detail-item">
                   <MapPin className="detail-icon" />
-                  <span>{profileData.address}</span>
+                  <span>{user.user1.address}</span>
                 </div>
               </div>
             </div>
@@ -59,7 +73,7 @@ function Home() {
     
           <div className="social-links">
             <a 
-              href={profileData.social.github} 
+              href={""} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="social-link"
@@ -69,7 +83,7 @@ function Home() {
             </a>
             
             <a 
-              href={profileData.social.linkedin} 
+              href={""} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="social-link"
@@ -79,7 +93,7 @@ function Home() {
             </a>
             
             <a 
-              href={profileData.social.twitter} 
+              href={""} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="social-link"
@@ -89,7 +103,7 @@ function Home() {
             </a>
             
             <a 
-              href={profileData.social.website} 
+              href={""} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="social-link"

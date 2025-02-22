@@ -1,32 +1,55 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../dashBoard/AdminDashboard.css'
-import { useState } from 'react';
-import { Search, Bell, Settings, Menu, User, Users, Box, LogOut } from 'lucide-react';
+import { useState,useCallback } from 'react';
+import {searchUser} from '../../../../app/searchquery'
+import { useSelector,useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { Search, Bell, Settings, Menu, User, Users, Box, LogOut, } from 'lucide-react';
 function AdminHeader() {
+    let navigate=useNavigate()
+let dispatch=useDispatch()
+
+
+    let adminName=useSelector((state)=>{
+        console.log(state,"stateeesss")
+return state.users[0].admin.FirstName
+
+    })
+
         const [searchQuery, setSearchQuery] = useState('');
-        const toggleSidebar = () => {
-            setSidebarOpen(!sidebarOpen);
-        };
-        const handleSearch = (e) => {
-            setSearchQuery(e.target.value);
-        };
+        
+      
     
+// const searchUser = useCallback(() => {
+//     dispatch(searchUser(searchQuery));
+//   }, [dispatch, searchQuery]);
+ const search=()=>{ 
+    console.log(searchQuery)
+     dispatch(searchUser(searchQuery))
+ }
+//  useEffect(()=>{
+//      console.log(searchQuery,"wuryyy")
+  
+//  },[searchQuery])
+
   return (
     <div>
        <header className="dashboard-header">
                     <div className="header-left">
-                        <button className="menu-toggle" onClick={toggleSidebar}>
+                        <button className="menu-toggle" >
                             <Menu size={24} />
                         </button>
-                        <div className="search-bar">
+                        {/* <div className="search-bar">
                             <Search size={20} />
                             <input 
                                 type="text" 
                                 placeholder="Search users..."
                                 value={searchQuery}
-                                onChange={handleSearch}
+                                onChange={(e)=>setSearchQuery(e.target.value)}
                             />
-                        </div>
+                            
+                        </div> */}
+                        {/* <button onClick={search}  >Search</button> */}
                     </div>
                     <div className="header-right">
                         <button className="notification-btn">
@@ -37,7 +60,7 @@ function AdminHeader() {
                             <div className="profile-image">
                                 <User size={20} />
                             </div>
-                            <span>Admin User</span>
+                            <span>Admin {adminName}</span>
                         </div>
                     </div>
                 </header>
