@@ -4,111 +4,54 @@ import './AdminDashboard.css';
 import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
-import { addUser } from '../../../../app/userSlice';
 import { findUser } from '../../../../app/searchquery';
-import { add_all_users } from '../../../../app/alluserSlice';
-import { useNavigate } from 'react-router';
-
-import { data } from 'react-router';
+import { add_all_users } from '../../../../app/allUserSlice';
+import {  useNavigate } from 'react-router';
 const AdminDashboard = () => {
-    let navigation1 = useNavigate()
-    let [state1, setState] = useState(1)
+    let [data,setData]=useState([])
+    const [isConditionMet, setIsConditionMet] = useState(1);
     const dispatch = useDispatch();
-    let navigation = useNavigate()
     let navigate = useNavigate()
-    //edit user
-    const editUser = (e) => {
-        console.log(e)
-        dispatch(findUser(e))
-        navigate('/editform')
-    }
-    ///
-    let [Data, setData] = useState([])
-    let [result, setResult] = useState({ name: "" })
-    let token = useSelector((state) => {
-        return state.users[0].token
-    })
-   // const searchQuery = useSelector((state) => state.search.searchQuery);
-   // console.log(searchQuery)
-   const allUsers = useSelector((state) => state.alluser);
-    // async function alluserData() {
-    //     useSelector((state) => state.alluser);
-    // }
+
+   
+
     useEffect(() => {
-        // If there's no search query, reset the result
-        // alluserData()
-        // if (!searchQuery) {
-        //     setResult(null);
-        //     return;
-        // }
-
-        // Find the user whose FirstName matches the search query
-        const foundUser = allUsers.map((user) => {
-            console.log(user, "yyyyyyyyyyyyyyrr")
-            user.forEach((e) => {
-                if (e.FirstName == searchQuery) {
-                    setResult({ name: e.FirstName })
-                    console.log(e, "000000000000000000000")
-                }
-            })
-        })
-
-        console.log(result, "fiondddddddd")
-        if (foundUser) {
-            console.log(foundUser, "find users");
-            setResult(foundUser);
-        } else {
-            console.log("No user found");
-            setResult(null);
+    
+    
+        async function fetchData() {
+            try {
+                const response = await axios.get('http://localhost:3000/admin');
+                
+                    setData(response.data.datas);
+            
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         }
-    }, [searchQuery, allUsers, state1]); // Runs whenever searchQuery or allUsers change
-
-    console.log(result, "finalllllllllllll")
-    // let serach = useSelector((state) => {
-    //     let userName = state.search.searchQuery
-    //     console.log(state.alluser, "staeeeeeee")
-    //     state.alluser.map((user) => {
-    //         user.map((e) => {
-    //             if (e.FirstName == userName) {
-    //                 console.log(e, "find users")
-
-    //                 setResult(e)
-
-    //             }
-    //         })
-    //     })
-    // })
-    // console.log(result, "secsrcseeh")
-
-
-    console.log(result, "resulttttttt")
-
-
-
-
-    useEffect(() => {
-        fetchDta()
-    }, [Data])
-    const fetchDta = async () => {
-        axios.get('http://localhost:3000/admin').then((data, response) => {
-            console.log(data.data.datas, "dataaaa")
-            setData(data.data.datas)
-            dispatch(add_all_users(data.data.datas))
-
-        })
-    }
-
-
-
-
-    const toggleSidebar = () => {
-        setSidebarOpen(!sidebarOpen);
-    };
-
+    
+        fetchData();
+    
+      
+    }, [isConditionMet]); // Empty dependency array to run only on mount and unmount
+    
+    console.log(data,"statesss")
     // delete
     let deleteUser = (id) => {
+        let deleteval=data.filter((users)=>{
+            return users._id!==id
+            })
+            console.log(deleteval,"delete values")
+            setData(deleteval)
+        axios.post('http://localhost:3000/admin/deleteuser', { id: id }).then((res) => {
+            console.log(res,"after dete reposnse")
+          console.log(data,"state")
+          console.log(id,"id")
+
+
+             
+             setIsConditionMet(isConditionMet+1)
+         })
         console.log(id)
-        setState(state1 + 1)
         Swal.fire({
             title: 'Are you sure?',
             text: 'Do you want to proceed?',
@@ -118,12 +61,7 @@ const AdminDashboard = () => {
             cancelButtonText: 'No',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('http://localhost:3000/admin/deleteuser', { id: id }).then((res) => {
-                    Swal.fire('Confirmed!', 'You have confirmed the action.', 'success');
-                    setState(state1 + 1)
-                    fetchDta()
-                    // navigation1('/admin')
-                })
+               
             } else {
                 Swal.fire('Cancelvled!', 'Yuuou cancelled the action.', 'error');
             }
@@ -143,12 +81,12 @@ const AdminDashboard = () => {
                 {/* Header */}
 
 
-                {/* User Management Section */}
+                {/* User Managementt Section */}
                 <section className="content-section">
                     <div className="section-header">
                         <h2>User Management</h2>
-                        <p>{state1}</p>
-                        <button className="add-user-btn" onClick={(() => navigation('/adduser'))}>Add New User</button>
+                        
+                        <button className="add-user-btn" onClick={(() => navigate('/adduser'))}>Add New User</button>
                     </div>
 
                     <div className="users-table-container">
@@ -163,7 +101,7 @@ const AdminDashboard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Data.map(user => (
+                                {data.map(user => (
                                     <tr key={user._id}>
                                         <td>{user.FirstName}</td>
                                         <td>{user.email}</td>

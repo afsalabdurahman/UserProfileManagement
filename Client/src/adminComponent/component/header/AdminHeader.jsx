@@ -6,32 +6,17 @@ import { useSelector,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { Search, Bell, Settings, Menu, User, Users, Box, LogOut, } from 'lucide-react';
 function AdminHeader() {
-    let navigate=useNavigate()
-let dispatch=useDispatch()
-
 
     let adminName=useSelector((state)=>{
         console.log(state,"stateeesss")
-return state.users[0].admin.FirstName
+        if(state.users[0]){
+            return state.users[0].admin.FirstName
+        }else{
+            return null
+        }
+
 
     })
-
-        const [searchQuery, setSearchQuery] = useState('');
-        
-      
-    
-// const searchUser = useCallback(() => {
-//     dispatch(searchUser(searchQuery));
-//   }, [dispatch, searchQuery]);
- const search=()=>{ 
-    console.log(searchQuery)
-     dispatch(searchUser(searchQuery))
- }
-//  useEffect(()=>{
-//      console.log(searchQuery,"wuryyy")
-  
-//  },[searchQuery])
-
   return (
     <div>
        <header className="dashboard-header">
@@ -60,7 +45,7 @@ return state.users[0].admin.FirstName
                             <div className="profile-image">
                                 <User size={20} />
                             </div>
-                            <span>Admin {adminName}</span>
+                            <span>Admin {adminName?adminName:null}</span>
                         </div>
                     </div>
                 </header>

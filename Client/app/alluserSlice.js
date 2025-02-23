@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const allusersSlice=createSlice({
+export const allUsersSlice=createSlice({
     name:"alluser",
     initialState:[],
     reducers:{
@@ -11,5 +11,5 @@ export const allusersSlice=createSlice({
 
 
 })
-export const {add_all_users} = allusersSlice.actions
-export default allusersSlice.reducer
+export const {add_all_users} = allUsersSlice.actions
+export default allUsersSlice.reducer

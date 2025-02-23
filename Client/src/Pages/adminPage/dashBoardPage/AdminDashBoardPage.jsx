@@ -6,8 +6,8 @@ import AdminHeader from '../../../adminComponent/component/header/AdminHeader'
 function AdminDashBoardPage() {
   return (
     <div>
-      <AdminHeader/>
-      <SideBar/>
+      {/* <AdminHeader/> */}
+      {/* <SideBar/> */}
       <AdminDashboard/>
       
     </div>
