@@ -22,8 +22,4 @@ A simple User Management System where users can upload their profile images, and
 - Authentication: [JWT](https://jwt.io/) (if using JWT for authentication)
 - File Upload: [Multer](https://www.npmjs.com/package/multer) (if using Multer for image uploads)
 
-## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/your-project-name.git
