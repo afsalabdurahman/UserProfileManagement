@@ -16,10 +16,10 @@ A simple User Management System where users can upload their profile images, and
 
 ## Technologies Used
 
-- Frontend: [React](https://reactjs.org/) (or mention any other framework you are using)
-- Backend: [Node.js](https://nodejs.org/) with [Express](https://expressjs.com/) (or your choice of backend framework)
-- Database: [MongoDB](https://www.mongodb.com/) (or another database you're using)
-- Authentication: [JWT](https://jwt.io/) (if using JWT for authentication)
-- File Upload: [Multer](https://www.npmjs.com/package/multer) (if using Multer for image uploads)
+- Frontend: [React](https://reactjs.org/) 
+- Backend: [Node.js](https://nodejs.org/) with [Express](https://expressjs.com/) 
+- Database: [MongoDB](https://www.mongodb.com/) 
+- Authentication: [JWT](https://jwt.io/) (
+- File Upload: [Multer](https://www.npmjs.com/package/multer)
 
 
